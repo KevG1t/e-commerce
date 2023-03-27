@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title - Mi tienda online</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -13,13 +13,27 @@
         <div class="container-fluid px-4">
             <a class="navbar-brand"><img src="~/img/FerreteriaLogo3.png" width="180" height="70"/></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width:50%">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <div class=" collapse navbar-collapse" id="navbarSupportedContent" style="width:50%">
+            <ul class="navbar-nav mb-2 me-auto mb-lg-0 ms-lg-4 w-75">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="@Url.Action("Index","Tienda")">Inicio</a></li>
+                @*buscador*@
+                <li class="nav-item w-100">
 
+                        <div class="height d-flex justify-content-center align-items-center flex-grow-1">
+                            <div class="col-md-9">
+                                <div class="search d-flex justify-content-center align-items-center gap-xl-3">
+                                    <i class="fa fa-search"></i>
+                                    <input type="text" class="form-control" placeholder="Buscas algo especifico?">
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
 
+                            </div>
+
+                        </div>
+                    
+                </li>
             </ul>
-            <form class="d-flex">
+            <form class="d-flex gap-xl-4">
 
                 @if (Session["USUARIO"] == null)
                 {
