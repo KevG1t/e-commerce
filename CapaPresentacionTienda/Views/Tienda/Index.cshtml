@@ -120,18 +120,38 @@
 @section scripts{
     
     <script>
+      
+        $(document).ready(function () {
+            MostrarCantidadCarrito();
+            MostrarCategoria();
+            
+            const respuesta = MostrarProductos(" ");
+            respuesta.then(function (response) {
+                $("#btn_prod_espe").click(function () {
+                    //valor de input
+                    let producto_a_buscar = $("#producto_especifico").val().toLowerCase().trim()
 
-      $(document).ready(function () {
-         
-          MostrarCategoria();
-          MostrarProductos(" ");
-          MostrarCantidadCarrito();
+                    if (producto_a_buscar != '') {
+                        //buscando y filtrando productos
+                        let productos_relacionados = response.map(producto => {
 
-      })
+                            if (producto.nombre.toLowerCase().trim().includes(producto_a_buscar)) {
+                                return producto
+                            }
+
+                        }).filter(elem => elem !== undefined)
+                        //pintado
+                        console.log(productos_relacionados)
+                    }
+                })
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
+
 
       function MostrarCategoria() {
-
-
           jQuery.ajax({
 
               url: "@Url.Action("ListarCategoria", "Tienda")",
@@ -150,7 +170,6 @@
                   $("#contenedorCategoria").LoadingOverlay("hide");
 
                   $("<div>").addClass("form-check").append(
-
                       $("<input>").addClass("form-check-input").attr({"type": "radio", "name": "categoria", "value": " ", "id": "cx", "checked": "checked" }),
                       $("<label>").addClass("form-check-label").text("TODOS").attr({"for": "cx"})
                   ).appendTo("#contenedorCategoria")
@@ -169,39 +188,40 @@
               }
 
           })
+  
       }
 
         function MostrarProductos(_idcategoria) {
+            return new Promise(function(resolve, reject){
+                jQuery.ajax({
 
+                    url: "@Url.Action("ListarProducto", "Tienda")",
+                    type: "POST",
+                    data: JSON.stringify({ idcategoria: _idcategoria }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
 
-          jQuery.ajax({
+                        resolve(response.data)
 
-              url: "@Url.Action("ListarProducto", "Tienda")",
-              type: "POST",
-              data: JSON.stringify({ idcategoria: _idcategoria }),
-              dataType: "json",
-              contentType: "application/json; charset=utf-8",
-              success: function (response) {
+                        $("#contenedorProducto").html(" ");
+                        $("#contenedorProducto").LoadingOverlay("hide");
 
-                 $("#contenedorProducto").html(" ");
-                  $("#contenedorProducto").LoadingOverlay("hide");
+                        $.each(response.data, function (i, element) {
 
-                 $.each(response.data, function (i, element) {
+                            $("<div>").addClass("col mb-5").append(
+                                $("<div>").addClass("card h-100").append(
+                                    $("<img>").addClass("card-img-top").attr({ "src": "data:image/" + element.extension + ";base64," + element.Base64 }),
+                                    $("<div>").addClass("card-body p-4").append(
+                                        $("<div>").addClass("text-center").append(
+                                            $("<h5>").addClass("fw-bolder").text(element.nombre),
+                                            "$" + element.precio.toFixed(2) + " USD "
+                                        )
+                                    ),
 
-                     $("<div>").addClass("col mb-5").append(
-                         $("<div>").addClass("card h-100").append(
-                             $("<img>").addClass("card-img-top").attr({ "src": "data:image/" + element.extension + ";base64," + element.Base64 }),
-                             $("<div>").addClass("card-body p-4").append(
-                                 $("<div>").addClass("text-center").append(
-                                     $("<h5>").addClass("fw-bolder").text(element.nombre),
-                                     "$" + element.precio.toFixed(2) + " USD "
-                                 )
-                             ),
+                                    $("<div>").addClass("card-footer p-2 pt-0 border-top-0 bg-transparent").append(
 
-                             $("<div>").addClass("card-footer p-2 pt-0 border-top-0 bg-transparent").append(
-
-                                 $("<div>").addClass("d-grid grap-2").append(
-
+                                        $("<div>").addClass("d-grid grap-2").append(
 
 
                                               @if(Session["USUARIO"] != null)
@@ -209,30 +229,31 @@
                                                    @:$("<button>").addClass("btn btn-success mb-2 agregarcarrito").data("idproducto", element.id_prod).text("Agregar producto"),
                                                }
 
+                                            $("<a>").addClass("btn btn-dark mt-auto")
+                                                .attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?idproducto=" + element.id_prod })
+                                                .text("Ver detalle")
+                                        )
 
-                                       $("<a>").addClass("btn btn-dark mt-auto")
-                                         .attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?idproducto=" + element.id_prod })
-                                         .text("Ver detalle")
-                                     )
+                                    )
 
-                             )
+                                )
+                            ).appendTo("#contenedorProducto")
+                        })
+                    },
+                    error: function () {
+                        reject("Ha ocurrido un error en la petición AJAX");
+                    },
+                    beforeSend: function () {
+                        $("#contenedorProducto").LoadingOverlay("show");
+                    },
 
-                         )
-                     ).appendTo("#contenedorProducto")
-                 })
-              },
-              beforeSend: function () {
-                  $("#contenedorProducto").LoadingOverlay("show");
+                });
 
-
-              },
-
-
-
-          })
-
+            });
         }
 
+ 
+        //categoria click
         $("#contenedorCategoria").click(function () {
             var _idcategoria = $("input[name=categoria]:checked").val();
             MostrarProductos(_idcategoria);
@@ -243,10 +264,9 @@
         //    MostrarProductos(_idcategoria);
         //})
 
-      
-            $(document).on("click", "button.agregarcarrito", function () {
 
-               
+        //agregar al carrito
+            $(document).on("click", "button.agregarcarrito", function () {
 
                  jQuery.ajax({
 
@@ -284,13 +304,7 @@
                      }
 
                  });
-
             })
-        
-      
-
-
-
 
     </script>
     
