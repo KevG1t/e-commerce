@@ -120,17 +120,20 @@
 @section scripts{
     
     <script>
-      
+        document.getElementById("buscador").removeAttribute("hidden")
         $(document).ready(function () {
             MostrarCantidadCarrito();
             MostrarCategoria();
-            
-            const respuesta = MostrarProductos(" ");
+
+            const respuesta = MostrarProductos();
+
             respuesta.then(function (response) {
+              
+                //click buscador
                 $("#btn_prod_espe").click(function () {
                     //valor de input
                     let producto_a_buscar = $("#producto_especifico").val().toLowerCase().trim()
-
+                    $("#contenedorProducto").LoadingOverlay("show");
                     if (producto_a_buscar != '') {
                         //buscando y filtrando productos
                         let productos_relacionados = response.map(producto => {
@@ -141,14 +144,69 @@
 
                         }).filter(elem => elem !== undefined)
                         //pintado
-                        console.log(productos_relacionados)
+                        pintar_productos(productos_relacionados)
+                    } else {
+                        pintar_productos(response)
                     }
                 })
+
+                //categoria click
+                $("#contenedorCategoria").click(function () {
+
+                    var _idcategoria = $("input[name=categoria]:checked").val();
+                    $("#contenedorProducto").LoadingOverlay("show");
+                    if (_idcategoria == " ") {
+                        pintar_productos(response)
+                    } else {
+                        let filtrarPorCategoria = response.filter(element => element.oCategoria.id_categoria === _idcategoria)
+                        pintar_productos(filtrarPorCategoria)
+                    }
+                })
+
 
             }).catch(function (error) {
                 console.log(error);
             });
         })
+
+        function pintar_productos(productos) {
+            $("#contenedorProducto").html(" ");
+            $("#contenedorProducto").LoadingOverlay("hide");
+
+            $.each(productos, function (i, element) {
+
+                            $("<div>").addClass("col mb-5").append(
+                                $("<div>").addClass("card h-100").append(
+                                    $("<img>").addClass("card-img-top").attr({ "src": "data:image/" + element.extension + ";base64," + element.Base64 }),
+                                    $("<div>").addClass("card-body p-4").append(
+                                        $("<div>").addClass("text-center").append(
+                                            $("<h5>").addClass("fw-bolder").text(element.nombre),
+                                            "$" + element.precio.toFixed(2) + " USD "
+                                        )
+                                    ),
+
+                                    $("<div>").addClass("card-footer p-2 pt-0 border-top-0 bg-transparent").append(
+
+                                        $("<div>").addClass("d-grid grap-2").append(
+
+
+                                              @if(Session["USUARIO"] != null)
+                                              {
+                                                   @:$("<button>").addClass("btn btn-success mb-2 agregarcarrito").data("idproducto", element.id_prod).text("Agregar producto"),
+                                               }
+
+                                            $("<a>").addClass("btn btn-dark mt-auto")
+                                                .attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?idproducto=" + element.id_prod })
+                                                .text("Ver detalle")
+                                        )
+
+                                    )
+
+                                )
+                            ).appendTo("#contenedorProducto")
+                        })
+        }
+
 
 
       function MostrarCategoria() {
@@ -188,16 +246,16 @@
               }
 
           })
-  
+
       }
 
-        function MostrarProductos(_idcategoria) {
+        function MostrarProductos() {
             return new Promise(function(resolve, reject){
                 jQuery.ajax({
 
                     url: "@Url.Action("ListarProducto", "Tienda")",
                     type: "POST",
-                    data: JSON.stringify({ idcategoria: _idcategoria }),
+                    data: JSON.stringify({ idcategoria: " " }),
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
@@ -252,12 +310,8 @@
             });
         }
 
- 
-        //categoria click
-        $("#contenedorCategoria").click(function () {
-            var _idcategoria = $("input[name=categoria]:checked").val();
-            MostrarProductos(_idcategoria);
-        })
+
+
 
         //$("#btnFiltro").click(function () {
         //    var _idcategoria = $("input[name=categoria]:checked").val();
