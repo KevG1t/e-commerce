@@ -17,7 +17,7 @@ namespace CapaNegocio
             return objCapaDato.ListarUsuarios();
         }
 
-        public string Registrar(Usuario_Admin obj, out string Mensaje)
+        public string Registrar(Usuario_Admin obj, out string Mensaje, out string id_persona)
         {
             Mensaje = string.Empty;
 
@@ -63,14 +63,14 @@ namespace CapaNegocio
                 if (obj.Ousuario.contraseña != "def$&00")
                 {
                     obj.Ousuario.contraseña = CN_Recursos.ConvertirSha256(obj.Ousuario.contraseña);
-                    return objCapaDato.Registrar(obj, out Mensaje);
+                    return objCapaDato.Registrar(obj, out Mensaje, out id_persona);
                 }
                 else
                 {
 
                     String contraseña = CN_Recursos.GenerarClave();
                     obj.Ousuario.contraseña = CN_Recursos.ConvertirSha256(contraseña);
-                    string result = objCapaDato.Registrar(obj, out Mensaje);
+                    string result = objCapaDato.Registrar(obj, out Mensaje, out id_persona);
 
                   
                     if (result == string.Empty)
@@ -102,11 +102,10 @@ namespace CapaNegocio
             }
             else
             {
+                id_persona = string.Empty;
                 return string.Empty;
 
             }
-
-
 
         }
 

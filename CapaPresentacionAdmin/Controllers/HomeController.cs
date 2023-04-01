@@ -130,18 +130,20 @@ namespace CapaPresentacionAdmin.Controllers
             object resultado = string.Empty;
             bool resEditar = false;
             string mensaje = string.Empty;
+            string id_persona = string.Empty;
+
             ViewData["REES"] = objeto.Ousuario.Reestrablecer = true;
 
             if (string.IsNullOrEmpty(objeto.Ousuario.id_usuario))
             {
-                resultado = new CN_Usuario().Registrar(objeto, out mensaje);
+                resultado = new CN_Usuario().Registrar(objeto, out mensaje, out id_persona);
             }
             else
             {
                 resEditar = new CN_Usuario().Editar(objeto, out mensaje);
             }
 
-            return Json(new { resultado = resultado, mensaje = mensaje, resEditar = resEditar }, JsonRequestBehavior.AllowGet);
+            return Json(new { resultado = resultado, id_persona = id_persona, mensaje = mensaje, resEditar = resEditar}, JsonRequestBehavior.AllowGet);
 
         }
         #endregion

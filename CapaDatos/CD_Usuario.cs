@@ -81,7 +81,7 @@ namespace CapaDatos
         }
 
         //registramos un usario el metodo se usa tanto en la tienda como en administracion
-        public string Registrar(Usuario_Admin obj, out string Mensaje)
+        public string Registrar(Usuario_Admin obj, out string Mensaje, out string id_persona)
         {
             string idautogenerado = string.Empty;
             Mensaje = string.Empty;
@@ -106,6 +106,7 @@ namespace CapaDatos
                     else
                         cmd.Parameters.AddWithValue("IDROL","");
 
+                    cmd.Parameters.Add("IDPERSONA", SqlDbType.VarChar, 6).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("MENSAJE", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("RESULTADO", SqlDbType.VarChar, 5).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -113,6 +114,7 @@ namespace CapaDatos
                     oconexion.Open();
                     cmd.ExecuteNonQuery();
 
+                    id_persona = cmd.Parameters["IDPERSONA"].Value.ToString();
                     idautogenerado = cmd.Parameters["RESULTADO"].Value.ToString();
                     Mensaje = cmd.Parameters["MENSAJE"].Value.ToString();
                 }
@@ -121,6 +123,7 @@ namespace CapaDatos
             {
                 idautogenerado = string.Empty;
                 Mensaje = ex.Message;
+                id_persona = string.Empty;
             }
             return idautogenerado;
         }

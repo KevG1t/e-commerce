@@ -20,7 +20,6 @@
 
             <div class="col-sm-3">
 
-
                 <div class="row mb-3">
                     <div class="col-sm-12">
                         <div class="card">
@@ -29,7 +28,6 @@
                             <div id="contenedorCategoria" class="card-body">
 
                             </div>
-
 
                         </div>
                        
@@ -121,11 +119,12 @@
     
     <script>
         document.getElementById("buscador").removeAttribute("hidden")
+
         $(document).ready(function () {
             MostrarCantidadCarrito();
             MostrarCategoria();
 
-            const respuesta = MostrarProductos();
+            const respuesta = obtenerProductos();
 
             respuesta.then(function (response) {
               
@@ -146,6 +145,7 @@
                         //pintado
                         pintar_productos(productos_relacionados)
                     } else {
+                        //pintamos todos los productos
                         pintar_productos(response)
                     }
                 })
@@ -249,7 +249,7 @@
 
       }
 
-        function MostrarProductos() {
+        function obtenerProductos() {
             return new Promise(function(resolve, reject){
                 jQuery.ajax({
 
@@ -317,7 +317,6 @@
         //    var _idcategoria = $("input[name=categoria]:checked").val();
         //    MostrarProductos(_idcategoria);
         //})
-
 
         //agregar al carrito
             $(document).on("click", "button.agregarcarrito", function () {

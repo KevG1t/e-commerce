@@ -57,7 +57,7 @@ namespace CapaPresentacionTienda.Controllers
             
             resultado = new CN_Usuario().Registrar(objeto,out mensaje);
             
-            if(resultado!="")
+            if(resultado != "")
             {
                 ViewBag.Error = null;
                 return RedirectToAction("Index", "Acceso");

@@ -179,7 +179,7 @@
             entrar = false
         }
 
-        if (usuario.value.length < 6) {
+        if (usuario.value.length < 3) {
             warnings += `El usuario no es valido <br>`
             entrar = false
         }
@@ -222,7 +222,6 @@
                     }
                 },
                 {
-
                         "data": "ORol.IdRol", "render": function (val) {
                             {
                                 if (val == 'R0001') {
@@ -257,7 +256,6 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
 
-
                    $("<option>").attr({ "value": "", "disable": "true" }).text("Seleccionar").appendTo("#opTipoAdmin");
                      $.each(data.data, function (index, valor) {
 
@@ -268,9 +266,6 @@
 
 
                     })
-
-
-
             },
             error: function (error) {
                 console.log(error)
@@ -406,7 +401,11 @@
 
                     if (data.resultado != "") {
 
+                        //asignando el id generado a la data
                         usuario.Ousuario.id_usuario = data.resultado;
+                        //asignando el id persona a la data
+                        usuario.Opersona.id_persona = data.id_persona;
+
                         tabladata.row.add(usuario).draw(false);
                         $("#FormModalNuevoUsuario").modal("hide");
                         swal({
