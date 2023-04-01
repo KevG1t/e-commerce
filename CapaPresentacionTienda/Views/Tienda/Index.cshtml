@@ -134,15 +134,15 @@
                     //valor de input
                     let producto_a_buscar = $("#producto_especifico").val().toLowerCase().trim()
                     $("#contenedorProducto").LoadingOverlay("show");
-                    if (producto_a_buscar != '') {
+                    if (producto_a_buscar.length > 0) {
                         //buscando y filtrando productos
-                        let productos_relacionados = response.map(producto => {
+                        let productos_relacionados = response.filter(producto => {
 
                             if (producto.nombre.toLowerCase().trim().includes(producto_a_buscar)) {
                                 return producto
                             }
 
-                        }).filter(elem => elem !== undefined)
+                        })
                         //pintado
                         pintar_productos(productos_relacionados)
                     } else {
@@ -151,11 +151,11 @@
                 })
 
                 //categoria click
-                $("#contenedorCategoria").click(function () {
+                $(".form-check-input").click(function () {
 
                     var _idcategoria = $("input[name=categoria]:checked").val();
                     $("#contenedorProducto").LoadingOverlay("show");
-                    if (_idcategoria == " ") {
+                    if (!(_idcategoria.length > 0)) {
                         pintar_productos(response)
                     } else {
                         let filtrarPorCategoria = response.filter(element => element.oCategoria.id_categoria === _idcategoria)
@@ -228,7 +228,7 @@
                   $("#contenedorCategoria").LoadingOverlay("hide");
 
                   $("<div>").addClass("form-check").append(
-                      $("<input>").addClass("form-check-input").attr({"type": "radio", "name": "categoria", "value": " ", "id": "cx", "checked": "checked" }),
+                      $("<input>").addClass("form-check-input").attr({"type": "radio", "name": "categoria", "value": "", "id": "cx", "checked": "checked" }),
                       $("<label>").addClass("form-check-label").text("TODOS").attr({"for": "cx"})
                   ).appendTo("#contenedorCategoria")
 
