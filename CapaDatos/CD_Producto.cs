@@ -93,7 +93,7 @@ namespace CapaDatos
                     cmd.ExecuteNonQuery();
 
                     id = Convert.ToString(cmd.Parameters["SALIDA"].Value);
-                    Mensaje = Convert.ToString(cmd.Parameters["MENSAJE"].Value);
+                    Mensaje = cmd.Parameters["MENSAJE"].Value.ToString();
                 }
             }
             catch (Exception ex)

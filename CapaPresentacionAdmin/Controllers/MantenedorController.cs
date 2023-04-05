@@ -116,7 +116,7 @@ namespace CapaPresentacionAdmin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        string msg = ex.Message;
+                        mensaje = ex.Message;
                         Guardar_imagen_exito = false;
                     }
 

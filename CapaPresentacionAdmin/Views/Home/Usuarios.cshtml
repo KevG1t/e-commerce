@@ -152,10 +152,8 @@
         parrafo.innerHTML = ""
 
         let regexEmail = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,4})+$/
-        let trasnf_telf = (parseInt(telefono.value.trim(), 10))
-        let first_digit = trasnf_telf.toString()
-        first_digit = first_digit.charAt(0)
 
+     
         if (nombre.value.length < 4) {
             warnings += `El nombre no es valido <br>`
             entrar = false
@@ -164,8 +162,16 @@
             warnings += `El apellido no es valido <br>`
             entrar = false
         }
-        if ((telefono.value.trim().length !== 8) || (first_digit != '2' && first_digit != '7' && first_digit != '8')) {
-            warnings += `El formato del telefono no es valido <br>`
+
+        let first_digit = telefono.value.charAt(0)
+        if ((first_digit == '2' || first_digit == '7' || first_digit == '8')) {
+            let telefonoLength = (parseInt(telefono.value.trim(), 10)).toString().length
+            if (telefonoLength !== 8) {
+                warnings += `El formato del telefono no es valido! <br>`
+                entrar = false
+            }
+        } else {
+            warnings += `El formato del telefono no es valido! <br>`
             entrar = false
         }
 

@@ -38,6 +38,7 @@ namespace CapaPresentacionTienda.Controllers
         {
             string resultado;
             string mensaje = string.Empty;
+            string id_persona;
             
             ViewData["id_tipo"] = objeto.Opersona.ObTipoPersona.id_tipo = "T002";
             ViewData["REES"] = objeto.Ousuario.Reestrablecer = false;
@@ -55,7 +56,7 @@ namespace CapaPresentacionTienda.Controllers
             }
 
             
-            resultado = new CN_Usuario().Registrar(objeto,out mensaje);
+            resultado = new CN_Usuario().Registrar(objeto,out mensaje, out id_persona);
             
             if(resultado != "")
             {
