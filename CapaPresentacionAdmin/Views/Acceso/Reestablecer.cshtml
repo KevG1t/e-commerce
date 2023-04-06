@@ -8,9 +8,10 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Reestablecer</title>
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    <link href="~/Content/acceso.css" rel="stylesheet" />
 </head>
-<body class="bg-dark">
+@*<body class="bg-dark">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -51,5 +52,37 @@
         </div>
     </div>
     <script src="~/Scripts/bootstrap.bundle.js"></script>
+</body>*@
+<body>
+    <div class="login restablecer">
+        <h2>RECUPERAR CONTRASEÑA</h2>
+        <hr>
+        <form method="post" action="@Url.Action("Reestablecer","Acceso")" class="form">
+            <div class="field">
+                <span class="icon">
+                    <ion-icon name="mail"></ion-icon>
+                </span>
+                <input type="text" name="correo" autocomplete="off" required>
+                <label>Correo</label>
+            </div>
+            <div class="form-fotter">
+                <a href="@Url.Action("Index","Acceso")">Voler al login</a>
+                <button class="btn" href="login.html">Restablecer</button>
+                <span>ingrese su correo para recibir una clave de reestablecimiento</span>
+            </div>
+        </form>
+        @{
+            if (ViewBag.Error != null)
+            {
+                <div class="alert" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+        }
+    </div>
+    <script type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

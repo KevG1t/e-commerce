@@ -93,7 +93,7 @@ namespace CapaPresentacionAdmin.Controllers
         //VALIDAMOS LA CONTRASEÑA GENERADA Y LA NUEVA QUE EL USUARIO VA USAR Y RETORNAMOS AL
         //LOGIN PARA QUE INGRESE CON LA NUEVA PASS (EL RESTABLECER SE DESACTIVA)
         [HttpPost]
-        public ActionResult CambiarContraseña(string idusuario, string contraActual, string nuevaContra, string ConfrimarContra)
+        public ActionResult CambiarContraseña(string idusuario, string contraActual, string nuevaContra, string ConfirmarContra)
         {
             Usuario_Admin oAdmin = new Usuario_Admin();
 
@@ -107,11 +107,11 @@ namespace CapaPresentacionAdmin.Controllers
                 return View();
 
             }
-            else if (nuevaContra != ConfrimarContra)
+            else if (nuevaContra != ConfirmarContra)
             {
                 TempData["id_usuario"] = idusuario;
                 ViewData["vclave"] = contraActual;
-                ViewBag.Error = "La contraseña actual no coinciden";
+                ViewBag.Error = "Las contraseñas no coinciden";
                 return View();
             }
             ViewData["vclave"] = "";
