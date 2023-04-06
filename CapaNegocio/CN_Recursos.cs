@@ -23,7 +23,7 @@ namespace CapaNegocio
         public static string ConvertirSha256(string texto)
         {
             StringBuilder Sb = new StringBuilder();
-            using (SHA256 hash = SHA256Managed.Create())
+            using (SHA256 hash = SHA256.Create())
             {
                 Encoding enc = Encoding.UTF8;
                 byte[] result = hash.ComputeHash(enc.GetBytes(texto));
@@ -45,14 +45,14 @@ namespace CapaNegocio
 
                 MailMessage mail = new MailMessage();
                 mail.To.Add(correo);
-                mail.From = new MailAddress("pedidosferres03@gmail.com");
+                mail.From = new MailAddress("kevinantonioc13@gmail.com");
                 mail.Subject = asunto;
                 mail.Body = mensaje;
                 mail.IsBodyHtml = true;
 
                 var smtp = new SmtpClient() //servidor cliente
                 {
-                    Credentials = new NetworkCredential("pedidosferres03@gmail.com", "ndyblgsuhvcofhmt"),
+                    Credentials = new NetworkCredential("kevinantonioc13@gmail.com", "laakuhkbxiqeezer"),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true
