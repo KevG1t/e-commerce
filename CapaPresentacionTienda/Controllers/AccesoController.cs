@@ -130,7 +130,7 @@ namespace CapaPresentacionTienda.Controllers
 
         /***********************   CambiarContraseña   ********************************/
         [HttpPost]
-        public ActionResult CambiarContra(string idusuario, string contraActual, string nuevaContra, string ConfrimarContra)
+        public ActionResult CambiarContra(string idusuario, string contraActual, string nuevaContra, string ConfirmarContra)
         {
             Usuario_Admin oAdmin = new Usuario_Admin();
 
@@ -144,7 +144,7 @@ namespace CapaPresentacionTienda.Controllers
                 return View();
 
             }
-            else if (nuevaContra != ConfrimarContra)
+            else if (nuevaContra != ConfirmarContra)
             {
                 TempData["id_usuario"] = idusuario;
                 ViewData["vclave"] = contraActual;
