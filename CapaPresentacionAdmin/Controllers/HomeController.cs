@@ -276,7 +276,7 @@ namespace CapaPresentacionAdmin.Controllers
             {
                 contenidoHtml += "<div class='factura'>";
                 contenidoHtml += "<div class='encabezado'>";
-                contenidoHtml += "<img src='https://localhost:44311/img/FerreteriaLogo1.png' alt='Logo de la empresa'>";
+                contenidoHtml += "<img src='"+ Url.Content("~/img/FerreteriaLogo3.png") + "' alt='Logo de la empresa'>";
                 contenidoHtml += "<h1>Factura #" + dato.VENTA + "</h1>";
                 contenidoHtml += "<p>Fecha: " + dato.FECHA + "</p>";
                 contenidoHtml += "</div>";
