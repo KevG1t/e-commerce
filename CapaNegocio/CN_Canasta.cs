@@ -18,6 +18,11 @@ namespace CapaNegocio
             return objCapaDato.Listar();
         }
 
+        public List<Factura> Factura(string id_venta)
+        {
+            return objCapaDato.Factura(id_venta);
+        }
+
         public string CrearCanasta(string id_admin)
         {
             return objCapaDato.CrearCanasta(id_admin);

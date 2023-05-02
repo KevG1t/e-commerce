@@ -13,7 +13,48 @@ namespace CapaDatos
 {
     public class CD_Canasta
     {
+        //PEDIR FACTURA
+        public List<Factura> Factura(string id_venta) 
+        {
+            List<Factura> data = new List<Factura>();
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_Factura", oconexion);
+                    cmd.Parameters.AddWithValue("id_venta", id_venta);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
 
+                    //cmd.ExecuteNonQuery();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            data.Add(new Factura()
+                            {
+                                VENTA = dr["VENTA"].ToString(),
+                                PRODUCTO = dr["PRODUCTO"].ToString(),
+                                PRECIO = (float)Convert.ToDecimal(dr["PRECIO"], new CultureInfo("es-NI")),
+                                UNIDADES = Convert.ToInt32(dr["UNIDADES"]),
+                                TOTAL_UNIDADES = (float)Convert.ToDecimal(dr["TOTAL_UNIDADES"], new CultureInfo("es-NI")),
+                                SUB_TOTAL = (float)Convert.ToDecimal(dr["SUB_TOTAL"], new CultureInfo("es-NI")),
+                                IMPUESTO = (float)Convert.ToDecimal(dr["IMPUESTO"], new CultureInfo("es-NI")),
+                                TOTAL = (float)Convert.ToDecimal(dr["TOTAL"], new CultureInfo("es-NI")),
+                                FECHA = dr["FECHA"].ToString()
+                        });
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
+            return data;
+        }
         //LISTA DE PRODUCTOS PARA LAS VENTAS DE LA TIENDA FISICA
         public List<Producto> Listar()
         {
@@ -116,6 +157,8 @@ namespace CapaDatos
             }
             return resultado;
         }
+
+        
 
         //realizamos las operaciones de agregacion,suma y resta de productos
         public bool OperacionCanasta(string id_admin, string id_producto,string id_venta , bool sumar,out string Mensaje)

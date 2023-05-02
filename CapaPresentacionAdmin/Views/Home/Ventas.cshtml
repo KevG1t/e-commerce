@@ -72,13 +72,16 @@
                     <div class="d-flex justify-content-end">
                         <label class="align-self-center"><b>SubTotal: $/. <span id="subtotal">0</span></b></label>
                     </div>
-                      
-                    <div  class="d-flex justify-content-end">
+
+                    <div class="d-flex justify-content-end">
+                        <label class="align-self-center"><b>IVA: $/. <span id="IVA">0</span></b></label>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
                         <label class="align-self-center"><b>Total: +IVA $/. <span id="total">0</span></b></label>
                     </div>
                 </div>
 
-              
             </div>
             
             <div class="modal-footer">
@@ -95,11 +98,9 @@
 
     <script>
 
-     
 
         var tabladata;
         var filaSeleccionada;
-
 
 
         function abrirModal() {
@@ -281,15 +282,16 @@
 
 
         }
-
-
+        //sumar totales
         function sumarTotal() {
             var sumaTotal = parseFloat(0);
             var subtotal = parseFloat(0);
+            let IVA
+
             $("input.input-cantidad").each(function (i) {
                 var precio = $(this).data("Oproducto").precio;
                 var cantidad = parseFloat($(this).val())
-              
+
                 subtotal = precio * cantidad;
 
                 sumaTotal += subtotal;
@@ -299,7 +301,9 @@
             $("#subtotal").text(sumaTotal.toFixed(2))
             $("#subtotal").data("subtotal", sumaTotal)
 
-            sumaTotal = (sumaTotal + (sumaTotal * 0.15))
+            IVA = (sumaTotal * 0.15)
+            $("#IVA").text(IVA.toFixed(2))
+            sumaTotal = (sumaTotal + IVA)
 
             $("#total").text(sumaTotal.toFixed(2))
             $("#total").data("sumatotal", sumaTotal)
@@ -397,18 +401,20 @@
                     dataType:"json",
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-                        if (data.respuesta) {
-                            card_producto.remove();
-                            sumarTotal();
-                    } else {
-                            swal("", data.mensaje, "warning")
-                    }
-                }
+                            if (data.respuesta) {
+                                    card_producto.remove();
+                                    sumarTotal();
+                            } else {
+                                    swal("", data.mensaje, "warning")
+                            }
+                        }
                 })
              pintarProductos();
         })
-        
-            function realizarVenta() {
+
+        function realizarVenta() {
+
+            const response = new Promise((resolve, reject) => {
                 jQuery.ajax({
                     url: '@Url.Action("RealizarVenta", "Home")',
                     type: "GET",
@@ -416,17 +422,66 @@
                     dataType:"json",
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-                      if (data.respuesta) {
-                            swal("", data.mensaje, "success")
+                        if (data.respuesta) {
+
+                            //swal("", data.mensaje, "success")
+                            resolve(data)
+
                             $("#ModalCanasta").modal("hide");
-                      } else {
-                        swal("", data.mensaje,"warning")
+                        } else {
+                            reject("la venta no pudo reslizarse")
+                            swal("", data.mensaje,"warning")
                       }
                 }
                 })
 
-            }
+            })
 
+            response.then((res) => {
+
+                swal({
+                    title: res.mensaje,
+                    text: "¿Desea imprimir factura?",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-primary",
+                    cancelButtonClass: "btn-danger",
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true
+                }, function () {
+                  
+                    jQuery.ajax({
+                    url: '@Url.Action("ImprimirFactura", "Home")',
+                    type: "POST",
+                    data: JSON.stringify({ id_venta: res.id_venta }),
+                    //ELIMINAMOS EL dataType por que retornamos un txt en la data
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        //imprimimos sin abrir nueva ventana
+                        var iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        document.body.appendChild(iframe);
+                        iframe.contentDocument.write(data);
+                        iframe.contentDocument.close();
+                        iframe.onload = function () {
+                            iframe.contentWindow.print();
+                            document.body.removeChild(iframe);
+                        };
+                        //abriendo la factura en nueva ventana
+                        //var newWindow = window.open("", "_blank");
+                        //newWindow.document.write(data);
+                        //newWindow.print();
+                        //newWindow.close();
+                        },
+                        error: function () {
+                            swal("", "Ha ocurrido un error al imprimir la factura", "error");
+                        }
+                    })
+                 })
+            })
+
+        }
 
             function CancelarVenta() {
                 jQuery.ajax({

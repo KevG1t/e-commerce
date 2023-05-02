@@ -10,6 +10,7 @@ using CapaNegocio;
 using ClosedXML.Excel;
 using CapaPresentacionAdmin.Permisos;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace CapaPresentacionAdmin.Controllers
 {
@@ -249,8 +250,81 @@ namespace CapaPresentacionAdmin.Controllers
 
             respuesta = new CN_Canasta().RealizarVenta(id_venta, id_admin, out mensaje);
 
-            return Json(new { respuesta = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+            if (!respuesta)
+            {
+                id_venta = String.Empty;
+            }
+
+            return Json(new { respuesta = respuesta, id_venta = id_venta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+
+        //imprimir factura
+        [HttpPost]
+        public ActionResult ImprimirFactura(string id_venta)
+        {
+            List<Factura> datos = new List<Factura>();
+            datos = new CN_Canasta().Factura(id_venta);
+            string contenidoHtml = GenerarContenidoHtml(datos);
+
+            return Content(contenidoHtml, "text/html", Encoding.UTF8);
+        }
+        //generar html
+        private string GenerarContenidoHtml(List<Factura> datos)
+        {
+            string contenidoHtml = "";
+            foreach (Factura dato in datos)
+            {
+                contenidoHtml += "<div class='factura'>";
+                contenidoHtml += "<div class='encabezado'>";
+                contenidoHtml += "<img src='https://localhost:44311/img/FerreteriaLogo1.png' alt='Logo de la empresa'>";
+                contenidoHtml += "<h1>Factura #" + dato.VENTA + "</h1>";
+                contenidoHtml += "<p>Fecha: " + dato.FECHA + "</p>";
+                contenidoHtml += "</div>";
+                contenidoHtml += "<div class='cuerpo'>";
+                contenidoHtml += "<p>Cliente: default </p>";
+                contenidoHtml += "<table>";
+                contenidoHtml += "<thead>";
+                contenidoHtml += "<tr>";
+                contenidoHtml += "<th>Producto</th>";
+                contenidoHtml += "<th>Cantidad</th>";
+                contenidoHtml += "<th>Precio unitario</th>";
+                contenidoHtml += "<th>Subtotal</th>";
+                contenidoHtml += "</tr>";
+                contenidoHtml += "</thead>";
+                contenidoHtml += "<tbody>";
+                foreach (Factura producto in datos)
+                {
+                    contenidoHtml += "<tr>";
+                    contenidoHtml += "<td>" + producto.PRODUCTO + "</td>";
+                    contenidoHtml += "<td>" + producto.UNIDADES + "</td>";
+                    contenidoHtml += "<td>" + producto.PRECIO + "</td>";
+                    contenidoHtml += "<td>" + producto.TOTAL_UNIDADES + "</td>";
+                    contenidoHtml += "</tr>";
+                }
+                contenidoHtml += "</tbody>";
+                contenidoHtml += "<tfoot>";
+                contenidoHtml += "<tr>";
+                contenidoHtml += "<td colspan='3'>Subtotal</td>";
+                contenidoHtml += "<td>" + dato.SUB_TOTAL + "</td>";
+                contenidoHtml += "</tr>";
+                contenidoHtml += "<tr>";
+                contenidoHtml += "<td colspan='3'>Impuesto</td>";
+                contenidoHtml += "<td>" + dato.IMPUESTO + "</td>";
+                contenidoHtml += "</tr>";
+                contenidoHtml += "<tr>";
+                contenidoHtml += "<td colspan='3'>Total</td>";
+                contenidoHtml += "<td>" + dato.TOTAL + "</td>";
+                contenidoHtml += "</tr>";
+                contenidoHtml += "</tfoot>";
+                contenidoHtml += "</table>";
+                contenidoHtml += "</div>";
+                contenidoHtml += "</div>";
+                break;
+            }
+            return contenidoHtml;
+        }
+
+
 
         //cancelar la venta
 

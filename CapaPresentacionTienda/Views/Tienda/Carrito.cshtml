@@ -295,11 +295,12 @@
         function SumarTotal() {
             var sumaTotal = parseFloat(0)
             var subTotal = parseFloat(0);
+            let IVA
             $("input.input-cantidad").each(function (i) {
 
                 var precio = $(this).data("oProducto").precio;
                 var Cantidad = parseFloat($(this).val())
-                let IVA
+               
                  subTotal = precio * Cantidad;
 
                 sumaTotal += subTotal;
@@ -307,9 +308,11 @@
 
             $("#subtotal").text(sumaTotal.toFixed(2))
             $("#subtotal").data("subTotal", sumaTotal)
+
             IVA = (sumaTotal * 0.15)
             $("#IVA").text(IVA.toFixed(2))
             sumaTotal = (sumaTotal + IVA)
+
             $("#total").text(sumaTotal.toFixed(2))
             $("#total").data("sumaTotal",sumaTotal)
 
