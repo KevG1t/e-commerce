@@ -274,17 +274,17 @@ namespace CapaPresentacionAdmin.Controllers
             string contenidoHtml = "";
             foreach (Factura dato in datos)
             {
-                contenidoHtml += "<div class='factura'>";
+                contenidoHtml += "<div class='factura'  style='font-size: 1em; width: 10cm; height: 100vh'>";
                 contenidoHtml += "<div class='encabezado'>";
-                contenidoHtml += "<img src='"+ Url.Content("~/img/FerreteriaLogo3.png") + "' alt='Logo de la empresa'>";
-                contenidoHtml += "<h1>Factura #" + dato.VENTA + "</h1>";
-                contenidoHtml += "<p>Fecha: " + dato.FECHA + "</p>";
+                contenidoHtml += "<img src='"+ Url.Content("~/img/FerreteriaLogo3.png") + "' alt='Logo de la empresa'  style='width: 100%; height: 100px;'>";
+                contenidoHtml += "<h1 style=\"font-size: 1em;\">Factura #: " + dato.VENTA + "</h1>";
+                contenidoHtml += "<p><strong>Fecha: </strong>" + dato.FECHA + "</p>";
                 contenidoHtml += "</div>";
                 contenidoHtml += "<div class='cuerpo'>";
-                contenidoHtml += "<p>Cliente: default </p>";
-                contenidoHtml += "<table>";
+                contenidoHtml += "<p><strong>Cliente: </strong>default </p>";
+                contenidoHtml += "<table style=\"display: flex; flex-direction: column; gap: 10px;\">";
                 contenidoHtml += "<thead>";
-                contenidoHtml += "<tr>";
+                contenidoHtml += "<tr style=\"display: flex; justify-content: space-between; gap: 30px;\">";
                 contenidoHtml += "<th>Producto</th>";
                 contenidoHtml += "<th>Cantidad</th>";
                 contenidoHtml += "<th>Precio unitario</th>";
@@ -294,7 +294,7 @@ namespace CapaPresentacionAdmin.Controllers
                 contenidoHtml += "<tbody>";
                 foreach (Factura producto in datos)
                 {
-                    contenidoHtml += "<tr>";
+                    contenidoHtml += "<tr style=\"display: flex; justify-content: space-between;\">";
                     contenidoHtml += "<td>" + producto.PRODUCTO + "</td>";
                     contenidoHtml += "<td>" + producto.UNIDADES + "</td>";
                     contenidoHtml += "<td>" + producto.PRECIO + "</td>";
@@ -302,17 +302,17 @@ namespace CapaPresentacionAdmin.Controllers
                     contenidoHtml += "</tr>";
                 }
                 contenidoHtml += "</tbody>";
-                contenidoHtml += "<tfoot>";
+                contenidoHtml += "<tfoot style=\"display: flex; flex-direction: column; gap: 30px; margin-top: 20px;\">";
                 contenidoHtml += "<tr>";
-                contenidoHtml += "<td colspan='3'>Subtotal</td>";
+                contenidoHtml += "<td colspan='3'><strong>Subtotal: </strong></td>";
                 contenidoHtml += "<td>" + dato.SUB_TOTAL + "</td>";
                 contenidoHtml += "</tr>";
                 contenidoHtml += "<tr>";
-                contenidoHtml += "<td colspan='3'>Impuesto</td>";
+                contenidoHtml += "<td colspan='3'><strong>Impuesto: </strong></td>";
                 contenidoHtml += "<td>" + dato.IMPUESTO + "</td>";
                 contenidoHtml += "</tr>";
                 contenidoHtml += "<tr>";
-                contenidoHtml += "<td colspan='3'>Total</td>";
+                contenidoHtml += "<td colspan='3'><strong>Total: </strong></td>";
                 contenidoHtml += "<td>" + dato.TOTAL + "</td>";
                 contenidoHtml += "</tr>";
                 contenidoHtml += "</tfoot>";
