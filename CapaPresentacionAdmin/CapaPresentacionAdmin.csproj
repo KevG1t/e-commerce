@@ -318,19 +318,30 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\images\contra_img.png" />
+    <Content Include="Content\images\img_adm2.png" />
+    <Content Include="Content\images\LoginBlue.png" />
+    <Content Include="Content\images\logoAdm2.2.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\images\wave_blue.png" />
+    <Content Include="Content\images\wave_contra.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\images\logoAdm2.1.png" />
+    <Content Include="Content\ReestablecerStyle.css" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
     <Content Include="Content\solid.min.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\style2.css" />
+    <Content Include="Content\styleRecuperar.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\sweetalert.css" />
@@ -344,6 +355,10 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="img\fondo.jpg" />
+    <Content Include="img\img_adm2.png" />
+    <Content Include="img\LoginBlue.png" />
+    <Content Include="img\LoginBlue2.png" />
+    <Content Include="img\wave_blue.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -476,11 +491,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\loadingoverlay\loadingoverlay.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="img\ferreterialogo1.png" />
     <Content Include="img\FerreteriaLogo2.png" />
+    <Content Include="Views\Acceso\CambiarContraseña - Copia.cshtml" />
+    <None Include="Views\Acceso\Reestablecer.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -512,10 +530,11 @@
     <Content Include="Views\Mantenedor\Productos.cshtml" />
     <Content Include="Views\Mantenedor\Categoria.cshtml" />
     <Content Include="Views\Home\Ventas.cshtml" />
-    <Content Include="Views\Acceso\Index.cshtml" />
-    <Content Include="Views\Acceso\Reestablecer.cshtml" />
+    <Content Include="Views\Acceso\Index2.cshtml" />
     <Content Include="Views\Acceso\CambiarContraseña.cshtml" />
     <Content Include="Views\Mantenedor\Roles.cshtml" />
+    <Content Include="Views\Acceso\Index.cshtml" />
+    <Content Include="Views\Acceso\Reestablecer2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

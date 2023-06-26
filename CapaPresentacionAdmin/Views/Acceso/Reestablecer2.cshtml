@@ -5,13 +5,11 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Index</title>
-    <link rel="stylesheet" type="text/css" href="~/Content/ReestablecerStyle.css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width" />
+    <title>Reestablecer</title>
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    <link href="~/Content/acceso.css" rel="stylesheet" />
 </head>
 @*<body class="bg-dark">
     <div id="layoutAuthentication">
@@ -46,16 +44,20 @@
                                     </form>
                                 </div>
 
-                <div class="button-container">
-                    <button class="button-enviar">ENVIAR</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
+            </main>
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+</body>*@
 <body>
     <div class="login restablecer">
         <h2>RECUPERAR CONTRASEÑA</h2>
         <hr>
-        <form method="post" action="@Url.Action("Reestablecer","Acceso")" class="form">
+        <form method="post" action="@Url.Action("Reestablecer2","Acceso")" class="form">
             <div class="field">
                 <span class="icon">
                     <ion-icon name="mail"></ion-icon>
@@ -69,11 +71,18 @@
                 <span>ingrese su correo para recibir una clave de reestablecimiento</span>
             </div>
         </form>
-
+        @{
+            if (ViewBag.Error != null)
+            {
+                <div class="alert" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+        }
     </div>
-
-
-    <script type="text/javascript" src="~/Scripts/main.js"></script>
+    <script type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>
