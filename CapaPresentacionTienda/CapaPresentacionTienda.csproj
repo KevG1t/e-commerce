@@ -142,14 +142,30 @@
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\images\contra_img.png" />
+    <Content Include="Content\images\loginTienda.png" />
+    <Content Include="Content\images\logo2.1.png" />
+    <Content Include="Content\images\logo2.2.png" />
+    <Content Include="Content\images\LogoBlue.png" />
+    <Content Include="Content\images\LogoBlue2.2.png" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\images\wave_blue.png" />
+    <Content Include="Content\images\wave_contra.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\ReestablecerStyle.css" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
     <Content Include="Content\solid.min.css" />
-    <Content Include="Content\styles.css" />
+    <Content Include="Content\stylelogeo.css" />
+    <Content Include="Content\styleRegis.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\sweetalert.css" />
@@ -219,9 +235,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\loadingoverlay.js" />
     <Content Include="Scripts\loadingoverlay.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Content\styleRecuperar.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -258,6 +276,10 @@
     <Content Include="Views\Tienda\Carrito.cshtml" />
     <Content Include="Views\Tienda\PagoEfectuado.cshtml" />
     <Content Include="Views\Tienda\MisCompras.cshtml" />
+    <Content Include="Views\Acceso\Registrar - Copia.cshtml" />
+    <Content Include="Views\Acceso\Index - Copia.cshtml" />
+    <Content Include="Views\Acceso\Reestablecer - Copia.cshtml" />
+    <Content Include="Views\Acceso\CambiarContra - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -302,7 +324,6 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties scripts_4jquery-3_14_11_1min_1map__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0-preview1\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0-preview1\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
