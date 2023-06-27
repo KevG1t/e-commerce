@@ -321,10 +321,10 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-
+             
                 $("<option>").attr({ "value": "","disable":"true" }).text("Seleccionar").appendTo("#cbocategoria");
                 $.each(data.data, function (index, valor) {
-
+                    if (valor.estado.trim() === 'HABILITADO')
                     $("<option>").attr({ "value": valor.id_categoria }).text(valor.nombre_categoria).appendTo("#cbocategoria");
 
                 })
